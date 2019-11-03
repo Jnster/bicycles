@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+  <!-- for constructor-based spring injection -->
+	<bean id="xmlMessageServiceConsumer" class="ru.jnster.consumer.XmlMessageServiceConsumer">
+		<constructor-arg>
+			<bean class="ru.jnster.service.FacebookService" />
+		</constructor-arg>
+	</bean>
+
+  <!-- for setter-based spring injection
+  <bean id="facebookService" class="ru.jnster.service.FacebookService"></bean>
+  <bean id="xmlMessageServiceConsumer" class="ru.jnster.consumer.XmlMessageServiceConsumer">
+    <property name="service" ref="facebookService"></property>
+  </bean>
+  -->
+
+</beans>

@@ -1,24 +1,29 @@
 package ru.jnster;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import ru.jnster.configuration.DIEmailConfiguration;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import ru.jnster.configuration.DIConfiguration;
 import ru.jnster.consumer.MessageServiceConsumer;
+import ru.jnster.consumer.XmlMessageServiceConsumer;
 
 public class SpringDependencyInjection {
 
     public static void main(String[] args) {
-        AnnotationConfigApplicationContext contextEmail = new AnnotationConfigApplicationContext(DIEmailConfiguration.class);
-        MessageServiceConsumer consumerEmail = contextEmail.getBean(MessageServiceConsumer.class);
+        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(
+            DIConfiguration.class);
+        MessageServiceConsumer messageServiceConsumer = applicationContext.getBean(MessageServiceConsumer.class);
 
-        consumerEmail.sendMessage("Tuta@pol.we", "Message.");
+        messageServiceConsumer.sendMessage("Tuta@pol.we", "Message.");
 
-        contextEmail.close();
+        applicationContext.close();
 
-        AnnotationConfigApplicationContext contextFacebook = new AnnotationConfigApplicationContext(DIEmailConfiguration.class);
-        MessageServiceConsumer consumerFacebook = contextFacebook.getBean(MessageServiceConsumer.class);
+        ClassPathXmlApplicationContext xmlApplicationContext = new ClassPathXmlApplicationContext(
+            "facebookConfiguration.xml");
+        XmlMessageServiceConsumer xmlMessageServiceConsumer = xmlApplicationContext
+            .getBean(XmlMessageServiceConsumer.class);
 
-        consumerFacebook.sendMessage("Fara", "Youth message.");
+        xmlMessageServiceConsumer.sendMessage("Cat", "Youth message.");
 
-        contextFacebook.close();
+        xmlApplicationContext.close();
     }
 }
